@@ -2,9 +2,13 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
-import {incrementupdateQuantity,decrementupdateQuantitity} from "./CartSlice.jsx"; 
+import { updateQuantity } from './CartSlice';
 import ".CartSlice.jsx";
 import { createSlice } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux';
+import { updateQuantity, addItem, removeItem } from './CartSlice';
+import { addItem } from './CartSlice';
+
 
 
 const CartItem = ({ onContinueShopping }) => {
@@ -17,7 +21,16 @@ const CartItem = ({ onContinueShopping }) => {
     cart.forEach(item => {
       total += item.cost * item.quantity;
     });
-    return total;
+    return (
+        <div>
+          <input
+            type="number"
+            value={item.quantity}
+            onChange={(e) => handleUpdateQuantity(item, e.target.value)}
+          />
+          {/* ... */}
+        </div>
+            );
  
   };
 
@@ -35,9 +48,9 @@ const CartItem = ({ onContinueShopping }) => {
 
   const handleDecrement = (item) => {
     if (item.quantity > 1) {
-        dispatch(updateQuantity({ ...item, quantity: item.quantity - 1 }));
+        dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
       } else {
-        dispatch(removeItem(item));
+        dispatch(removeItem( item.id));
       }
    
   };
